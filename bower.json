@@ -1,0 +1,26 @@
+{
+  "name": "EpicApp",
+  "version": "0.0.0",
+  "authors": [
+    "fahadbillah <fahadbillah@yahoo.com>"
+  ],
+  "description": "All modern development tool mashup",
+  "main": "app/index.html",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8"
+  }
+}

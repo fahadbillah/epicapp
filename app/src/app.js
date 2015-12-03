@@ -1,10 +1,18 @@
 'use strict';
-
-var main = {
-	init: function() {
-		var h = document.querySelector('body');
-		h.innerHTML = h.innerHTML+'<h1>other file</h1>';
-	}
-};
-
-main.init();
+var EpicApp = angular.module('EpicApp', ['ngRoute'])
+.config(['$routeProvider', function ($routeProvider) {
+	$routeProvider
+	.when('/', {
+		templateUrl: 'view/home.html',
+		controller: 'HomeCtrl'
+	})
+	.when('/contact', {
+		templateUrl: 'view/contact.html',
+		controller: 'ContactCtrl'
+	})
+	.when('/error/:errorId', {
+		templateUrl: 'view/error.html',
+		controller: 'ErrorCtrl'
+	})
+	.otherwise({ redirectTo: '/error/404' });
+}]);
