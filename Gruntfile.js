@@ -24,8 +24,9 @@ module.exports = function(grunt) {
 				files: [
 				{
 					expand: true,
-					src: ['app/**/*.html'],
-					dist: 'dist/',
+					cwd: 'app/',
+					src: ['**/*.html'],
+					dest: 'dist/',
 					ext: '.html',
 					extDot: 'first'
 				}
@@ -38,20 +39,14 @@ module.exports = function(grunt) {
 				{
 					expand: true,
 					cwd: 'app/', 
-					src: ['index.html'],
-					dest: 'dist/',
-				},
-				{
-					expand: true,
-					cwd: 'app/', 
-					src: ['view/'],
-					dest: 'dist/',
+					src: ['index.html', 'view/**'],
+					dest: 'dist/'
 				}
 				]
 			}
 		}
 	});
 
-	grunt.registerTask('default', ['uglify','copy']);
+	grunt.registerTask('default', ['uglify','copy','htmlmin']);
 	
 };
