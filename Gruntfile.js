@@ -7,25 +7,51 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-wiredep');
-	grunt.loadNpmTasks('grunt-file-creator');
 	grunt.loadNpmTasks('grunt-ng-annotate');
+	grunt.loadNpmTasks('grunt-filerev');
+	grunt.loadNpmTasks('grunt-usemin');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		useminPrepare: {
+			html: 'app/index.html',
+			options: {
+				dest: 'dist'
+			}
+		},
+		usemin: {
+			html: 'dist/index.html'
+		},
 		concat: {
-			allJs: {
-				src: ['app/src/**/*js'],
+			scripts: {
+				src: ['app/src/**/*.js'],
 				dest: 'dist/src/build.min.js'
+			},
+			vendors: {
+				src: ['bower_components/**/*.min.js'],
+				dest: 'dist/src/vendor.min.js'
 			}
 		},
 		uglify: {
 			options: {
 				banner: '/* <%= pkg.name %> build <%= grunt.template.today("yyyy-mm-dd") %> */'
 			},
-			build: {
+			script: {
 				src: 'dist/src/build.min.js',
 				dest: 'dist/src/build.min.js'
+			},
+			vendor: {
+				src: 'dist/src/vendor.min.js',
+				dest: 'dist/src/vendor.min.js'
+			}
+		},
+		cssmin: {
+			target: {
+				files: {
+					'dist/style/style.min.css': ['app/style/*.css']
+				}
 			}
 		},
 		htmlmin: {
@@ -65,17 +91,6 @@ module.exports = function(grunt) {
 			},
 			target: ['GruntFile.js','app/src/']
 		},
-		'file-creator': {
-			options: {
-				openFlags: 'w'
-			},
-			basic: {
-				'dist/src/build.min.js': function(fs, fd, done) {
-					fs.writeSync(fd, '');
-					done();
-				}
-			}
-		},
 		ngAnnotate: {
 			dist: {
 				files: [{
@@ -94,5 +109,6 @@ module.exports = function(grunt) {
 		clean: ["dist/"]
 	});
 
-grunt.registerTask('default', ['clean','wiredep','copy','file-creator','concat','ngAnnotate','uglify','htmlmin']);
+// grunt.registerTask('default', ['clean','wiredep','copy','concat','ngAnnotate','uglify','htmlmin','cssmin']);
+grunt.registerTask('default', ['clean','usemin']);
 };
