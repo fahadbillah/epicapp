@@ -1,5 +1,9 @@
+{
+"strict": true,
 "globals": {
-"$": false,
+"module": true,
+"require": false,
 "angular": false,
-"EpicApp": false,
+"EpicApp": true
+}
 }
