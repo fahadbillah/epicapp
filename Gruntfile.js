@@ -18,39 +18,48 @@ module.exports = function(grunt) {
 		useminPrepare: {
 			html: 'app/index.html',
 			options: {
-				dest: 'dist'
+				dest: 'dist',
+				flow: {
+					steps: { 
+						js: ['concat', 'uglify'], 
+						css: ['concat', 'cssmin'] 
+					}, 
+					post: {} 
+				}
 			}
 		},
 		usemin: {
 			html: 'dist/index.html'
 		},
 		concat: {
-			scripts: {
-				src: ['app/src/**/*.js'],
-				dest: 'dist/src/build.min.js'
-			},
 			vendors: {
 				src: ['bower_components/**/*.min.js'],
 				dest: 'dist/src/vendor.min.js'
+			},
+			scripts: {
+				src: ['app/src/**/*.js'],
+				dest: 'dist/src/build.min.js'
 			}
 		},
 		uglify: {
 			options: {
+				mangle: false,
 				banner: '/* <%= pkg.name %> build <%= grunt.template.today("yyyy-mm-dd") %> */'
 			},
-			script: {
-				src: 'dist/src/build.min.js',
-				dest: 'dist/src/build.min.js'
-			},
 			vendor: {
-				src: 'dist/src/vendor.min.js',
+				src: ['dist/src/vendor.min.js'],
 				dest: 'dist/src/vendor.min.js'
+			},
+			script: {
+				src: ['dist/src/build.min.js'],
+				dest: 'dist/src/build.min.js'
 			}
 		},
 		cssmin: {
 			target: {
 				files: {
-					'dist/style/style.min.css': ['app/style/*.css']
+					'dist/style/style.min.css': ['app/style/*.css'],
+					'dist/style/vendor.min.css': ['bower_components/**/*.css'],
 				}
 			}
 		},
@@ -63,7 +72,7 @@ module.exports = function(grunt) {
 				files: [
 				{
 					expand: true,
-					cwd: 'app/',
+					cwd: 'dist/',
 					src: ['**/*.html'],
 					dest: 'dist/',
 					ext: '.html',
@@ -106,9 +115,11 @@ module.exports = function(grunt) {
 				src: ['app/index.html']
 			}
 		},
-		clean: ["dist/"]
+		clean: {
+			start: ['dist/'],
+			end: ['.tmp']
+		}
 	});
 
-// grunt.registerTask('default', ['clean','wiredep','copy','concat','ngAnnotate','uglify','htmlmin','cssmin']);
-grunt.registerTask('default', ['clean','usemin']);
+grunt.registerTask('default', ['clean:start','wiredep','copy','useminPrepare','concat','ngAnnotate','uglify','cssmin','usemin','htmlmin','clean:end']);
 };
