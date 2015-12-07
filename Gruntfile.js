@@ -31,6 +31,12 @@ module.exports = function(grunt) {
 		usemin: {
 			html: 'dist/index.html'
 		},
+		filerev: {
+			dist: {
+					//
+				src: ['dist/src/{,*/}*.js','dist/style/{,*/}*.css']
+			}
+		},
 		concat: {
 			vendors: {
 				src: ['bower_components/**/*.min.js'],
@@ -120,6 +126,6 @@ module.exports = function(grunt) {
 			end: ['.tmp']
 		}
 	});
-
-grunt.registerTask('default', ['clean:start','wiredep','copy','useminPrepare','concat','ngAnnotate','uglify','cssmin','usemin','htmlmin','clean:end']);
+	//
+	grunt.registerTask('default', ['clean:start','wiredep','copy','useminPrepare','concat','ngAnnotate','uglify','cssmin','filerev','usemin','htmlmin','clean:end']);
 };
