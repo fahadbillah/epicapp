@@ -19,10 +19,6 @@
   "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.6",
-    "angular": "~1.4.8",
-    "angular-route": "~1.4.8",
-    "animate-css": "~3.4.0",
-    "font-awesome": "~4.5.0"
+    "requirejs": "~2.1.22"
   }
 }
