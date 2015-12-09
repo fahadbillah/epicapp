@@ -1,5 +1,9 @@
 'use strict';
-EpicApp
-.controller('HomeCtrl', ['$scope', function($scope) {
-	$scope.message = 'Welcome MR. X';
-}]);
+define([
+	'angular'
+	],function(angular) {
+		angular.module('EpicApp.home', [])
+		.controller('HomeCtrl', ['$scope', function ($scope) {
+			$scope.message = 'Hello World';
+		}])
+	});

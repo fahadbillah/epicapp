@@ -1,25 +1,26 @@
 require.config({
-	baseUrl: 'app/src/',
+	baseUrl: 'src/',
 	paths: {
-		angular: '../../../bower_components/angular/angular',
-		ngRoute: '../../../bower_components/angular-route/angular-route',
+		angular: 'bower_components/angular/angular',
+		angularRoute: 'bower_components/angular-route/angular-route',
 	},
 	shim: {
 		'angular': {
 			exports: 'angular'
 		},
-		'ngRoute': {
-			deps: 'angular',
-			exports: 'ngRoute'
+		'angularRoute': {
+			deps: ['angular'],
+			exports: 'angularRoute'
 		},
 	},
-	priority: ["angular"],
-	deps: ['../../src/app']
+	priority: ["angular","angularRoute"],
+	deps: ['app']
 });
 
-require(['angular'], function(angular) {
-	var $html = angular.element(document.getElementsByTagName('html')[0]);
-	angular.element().ready(function() {
+require(['angular','app'], function(angular,app) {
+	angular
+	.element(document.getElementsByTagName('html')[0])
+	.ready(function() {
 		angular.bootstrap(document, ['EpicApp']);
 	});
 });
