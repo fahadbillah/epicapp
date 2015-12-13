@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ng-annotate');
 	grunt.loadNpmTasks('grunt-filerev');
 	grunt.loadNpmTasks('grunt-usemin');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -124,8 +125,29 @@ module.exports = function(grunt) {
 		clean: {
 			start: ['dist/'],
 			end: ['.tmp']
+		},
+		requirejs: {
+			compile: {
+				options: {
+					appDir: '',
+					baseUrl: 'app/src/',
+					dir: 'dist/src/',
+					mainConfigFile: 'app/src/app.js',
+					module: [
+					{
+						name: 'EpicApp'
+					}
+					],
+					findNestedDependancies: true
+				}
+			}
 		}
 	});
+
 	//
-	grunt.registerTask('default', ['clean:start','wiredep','copy','useminPrepare','concat','ngAnnotate','uglify','cssmin','filerev','usemin','htmlmin','clean:end']);
+	grunt.registerTask('default', ['clean:start','copy','requirejs','htmlmin']);
+	
+
+
+	// grunt.registerTask('default', ['clean:start','wiredep','copy','useminPrepare','concat','ngAnnotate','uglify','cssmin','filerev','usemin','htmlmin','clean:end']);
 };
